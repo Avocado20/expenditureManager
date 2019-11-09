@@ -1,5 +1,7 @@
 package service;
 
+import config.Translations;
+
 import javax.inject.Inject;
 
 /**

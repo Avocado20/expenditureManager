@@ -1,6 +1,6 @@
 package rest.exception;
 
-import net.galewski.master.feature.microserwis.dto.ErrorDTO;
+import dto.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
