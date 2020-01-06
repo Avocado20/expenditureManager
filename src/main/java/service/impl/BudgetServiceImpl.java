@@ -3,6 +3,7 @@ package service.impl;
 import domain.Budget;
 import domain.BudgetType;
 import domain.Category;
+import domain.Expenditure;
 import dto.BudgetDto;
 import org.springframework.stereotype.Service;
 import repository.BudgetRepository;
@@ -26,7 +27,8 @@ public class BudgetServiceImpl extends AbstractService implements BudgetService 
         return budgetRepository.save(new Budget()
                 .setBegin(budgetDto.getBegin())
                 .setCategory(category)
-                .setType(budgetDto.getBudgetType()));
+                .setType(budgetDto.getBudgetType()))
+                .setSize(budgetDto.getSize());
     }
     
     public List<Budget> getByType(final LocalDate currentDate, final BudgetType type) {
@@ -64,7 +66,8 @@ public class BudgetServiceImpl extends AbstractService implements BudgetService 
         return budgetRepository.save(findById(budgetDto.getBudgetId())
                 .setBegin(budgetDto.getBegin())
                 .setCategory(categoryService.findById(budgetDto.getCategoryId()))
-                .setType(budgetDto.getBudgetType()));
+                .setType(budgetDto.getBudgetType()))
+                .setSize(budgetDto.getSize());
     }
 
     public Budget findById(Long budgetId) {
@@ -79,7 +82,6 @@ public class BudgetServiceImpl extends AbstractService implements BudgetService 
             new NoSuchElementException(this.i18n.get("budget.no.such.budget", String.valueOf(budgetId)));
         }
     }
-
 
     @Inject
     protected BudgetRepository budgetRepository;

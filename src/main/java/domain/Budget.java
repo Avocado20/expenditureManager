@@ -28,6 +28,7 @@ public class Budget {
 
     private LocalDate begin;
     private BudgetType type;
+    private Double size;
 
 
 }

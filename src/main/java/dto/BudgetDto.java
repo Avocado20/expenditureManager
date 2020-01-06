@@ -19,4 +19,7 @@ public class BudgetDto {
 
     @NotNull
     private BudgetType budgetType;
+
+    @NotNull
+    private Double size;
 }
