@@ -18,7 +18,10 @@ public class Expenditure {
     @Column(name = TableNameContants.EXPENDITURE_ID)
     private Long id;
 
+    private Category category;
     private Double expenditure;
 
     private LocalDateTime time;
+
+
 }

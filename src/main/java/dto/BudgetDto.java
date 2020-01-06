@@ -10,10 +10,13 @@ import java.time.LocalDate;
 public class BudgetDto {
 
     private Long budgetId;
+
     @NotNull
     private Long categoryId;
+
     @NotNull
     private LocalDate begin;
+
     @NotNull
     private BudgetType budgetType;
 }
