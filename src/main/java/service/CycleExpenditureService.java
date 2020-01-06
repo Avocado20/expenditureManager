@@ -31,11 +31,15 @@ public class CycleExpenditureService {
         expenditures.add(cyclicDto);
     }
 
+
+
     public void runAllTasks() {
-        while (true) {
-            try {
-                Thread.sleep(24 * 60 * 60);
-                expenditures.stream().forEach(cyclic -> {
+        if( FeatureToggleService.isEnabled("CYCLICEXP"))
+        {
+            while (true) {
+                try {
+                    Thread.sleep(24 * 60 * 60);
+                    expenditures.stream().forEach(cyclic -> {
                     if (cyclic.getDaysMissed() == cyclic.getHowOftenInDays()) {
                         ExpenditureDto expenditureDto = cyclic.getExpenditureDto();
                         expenditureDto.setTime(LocalDateTime.now());
@@ -43,9 +47,10 @@ public class CycleExpenditureService {
                     } else {
                         cyclic.setDaysMissed(cyclic.getDaysMissed() + 1);
                     }
-                });
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

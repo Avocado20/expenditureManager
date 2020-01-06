@@ -7,10 +7,7 @@ import domain.Expenditure;
 import dto.ExpenditureDto;
 import org.springframework.stereotype.Service;
 import repository.ExpenditureRepository;
-import service.AbstractService;
-import service.BudgetService;
-import service.CategoryService;
-import service.ExpenditureService;
+import service.*;
 
 import javax.inject.Inject;
 import java.time.chrono.ChronoLocalDateTime;
@@ -49,10 +46,13 @@ public class ExpenditureServiceImpl extends AbstractService implements Expenditu
     public Expenditure createAndWarn(ExpenditureDto expenditureDto)
     {
         Expenditure expenditure = this.create(expenditureDto);
-        List<Budget> exceedBudgets = this.budgetService.exceededBudgets(expenditureDto.getCategoryId());
-        if (!exceedBudgets.isEmpty())
+        if (FeatureToggleService.isEnabled("WARNING01"))
         {
-            throw new NoSuchElementException(this.i18n.get("budget.exceeded"));
+            List<Budget> exceedBudgets = this.budgetService.exceededBudgets(expenditureDto.getCategoryId());
+            if (!exceedBudgets.isEmpty())
+            {
+                throw new NoSuchElementException(this.i18n.get("budget.exceeded"));
+            }
         }
         return expenditure;
     }
