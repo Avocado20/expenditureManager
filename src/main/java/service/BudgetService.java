@@ -15,5 +15,6 @@ public interface BudgetService  {
     Budget edit(BudgetDto budgetDto);
     Budget findById(Long budgetId);
     void deleteByKey(Long budgetId);
+    List<Budget> exceededBudgets(Long categoryId);
 
 }

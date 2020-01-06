@@ -46,6 +46,17 @@ public class ExpenditureServiceImpl extends AbstractService implements Expenditu
         return getLast(10);
     }
 
+    public Expenditure createAndWarn(ExpenditureDto expenditureDto)
+    {
+        Expenditure expenditure = this.create(expenditureDto);
+        List<Budget> exceedBudgets = this.budgetService.exceededBudgets(expenditureDto.getCategoryId());
+        if (!exceedBudgets.isEmpty())
+        {
+            throw new NoSuchElementException(this.i18n.get("budget.exceeded"));
+        }
+        return expenditure;
+    }
+
     @Override
     public Expenditure create(ExpenditureDto expenditureDto) {
 

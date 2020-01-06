@@ -10,6 +10,7 @@ import repository.BudgetRepository;
 import service.AbstractService;
 import service.BudgetService;
 import service.CategoryService;
+import service.ExpenditureService;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
@@ -70,6 +71,18 @@ public class BudgetServiceImpl extends AbstractService implements BudgetService 
                 .setSize(budgetDto.getSize());
     }
 
+    public List<Budget> exceededBudgets(Long categoryId)
+    {
+        List<Budget> budgets = this.budgetRepository.findByCategory(categoryId).get();
+        budgets.stream().filter(budget-> {
+                    List<Expenditure> expenditures = this.expenditureService.getForBudget(budget.getId());
+                    Double sum = expenditures.stream().mapToDouble(o -> o.getExpenditure()).sum();
+                    return sum > budget.getSize();
+                }
+        );
+        return budgets;
+    }
+
     public Budget findById(Long budgetId) {
         return this.budgetRepository.findById(budgetId)
                 .orElseThrow(() -> new NoSuchElementException(this.i18n.get("budget.no.such.budget", String.valueOf(budgetId))));
@@ -88,4 +101,7 @@ public class BudgetServiceImpl extends AbstractService implements BudgetService 
 
     @Inject
     protected CategoryService categoryService;
+
+    @Inject
+    protected ExpenditureService expenditureService;
 }
