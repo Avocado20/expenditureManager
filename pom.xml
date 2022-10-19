@@ -13,7 +13,7 @@
         <spring-jdbc.version>4.3.9.RELEASE</spring-jdbc.version>
         <commons-io.version>1.3.2</commons-io.version>
         <lombok.version>1.16.20</lombok.version>
-        <jackson-databind.version>2.9.8</jackson-databind.version>
+        <jackson-databind.version>2.13.4.1</jackson-databind.version>
         <powermock.version>1.4.9</powermock.version>
     </properties>
 
